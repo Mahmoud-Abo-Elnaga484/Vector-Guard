@@ -1,0 +1,42 @@
+{
+  "_README": {
+    "purpose": "Three-case demonstration set for the live presentation.",
+    "consumed_by": "python main.py demo",
+    "design": "One case per required behaviour: a single-section success, a multi-section synthesis, and a correct refusal. These are C-01, C-09 and C-21 from the full 24-case testset, unchanged, so the demo numbers are a genuine subset of the full evaluation rather than a separate cherry-picked set.",
+    "cost": "3 generation calls + 2 judge calls (the refusal case is not judged)."
+  },
+
+  "cases": [
+    {
+      "case_id": "C-01",
+      "query": "Patient with abrupt high fever for 3 days, severe headache, retro-orbital pain and myalgia. Which arboviral disease does the guideline evidence point to?",
+      "case_type": "direct",
+      "expected_behavior": "answer",
+      "relevant_sections": ["2.2 Dengue", "2.1 Background", "2 Introduction"],
+      "relevant_chunk_ids": [],
+      "notes": "DEMO CASE A — single-section retrieval. Classic dengue-leaning presentation. Success baseline: evidence should concentrate under Dengue with distinct per-disease fields."
+    },
+    {
+      "case_id": "C-09",
+      "query": "Day 5 of fever, now afebrile but with abdominal pain, persistent vomiting and rising haematocrit. What does the evidence say?",
+      "case_type": "multi_chunk",
+      "expected_behavior": "answer",
+      "relevant_sections": [
+        "2.2 Dengue",
+        "2.7 Identifying severe arboviral disease",
+        "2 Introduction"
+      ],
+      "relevant_chunk_ids": [],
+      "notes": "DEMO CASE B — multi-section synthesis. Critical-phase warning signs require pulling evidence from the dengue section AND the severity section, with separate citations for each."
+    },
+    {
+      "case_id": "C-21",
+      "query": "What is the first-line treatment for adult hypertension?",
+      "case_type": "out_of_scope",
+      "expected_behavior": "refuse",
+      "relevant_sections": [],
+      "relevant_chunk_ids": [],
+      "notes": "DEMO CASE C — correct refusal. Outside the indexed source library. Must return an insufficient-evidence refusal instead of answering from model knowledge. Precision@k is reported N/A by design; a refusal is not a scored generation."
+    }
+  ]
+}

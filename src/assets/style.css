@@ -1,0 +1,98 @@
+/* Global background and font setup */
+.stApp {
+    background-color: #F8FAFC;
+    background-image: url('medical_background.png');
+    background-repeat: no-repeat;
+    background-position: right -10px top -100px;
+    background-size: 82%;
+    background-attachment: fixed;
+    color: #172033;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Ensure main content container is layered properly over the background */
+.main .block-container {
+    background-color: rgba(248, 250, 252, 0.75);
+    border-radius: 12px;
+    padding-top: 2rem;
+}
+
+/* Clean sidebar styling */
+[data-testid="stSidebar"] {
+    background-color: #FFFFFF;
+    border-right: 1px solid #E2E8F0;
+}
+
+/* Header typography */
+.header-title {
+    color: #0F766E;
+    font-weight: 700;
+    font-size: 1.75rem;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.2rem;
+}
+.header-subtitle {
+    color: #64748B;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Hero Welcome Box */
+.hero-container {
+    text-align: center;
+    padding: 3rem 1.5rem 2rem 1.5rem;
+    max-width: 680px;
+    margin: 0 auto;
+}
+.hero-title {
+    color: #0F766E;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.hero-desc {
+    color: #64748B;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+/* Suggestion Pill Buttons */
+div.stButton > button {
+    background-color: #FFFFFF;
+    color: #172033;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    width: 100%;
+    min-height: 52px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+div.stButton > button:hover {
+    border-color: #0F766E;
+    color: #0F766E;
+    background-color: #F0FDF4;
+}
+
+/* Chat Message Card Translucency for Readability */
+[data-testid="stChatMessage"] {
+    background-color: rgba(255, 255, 255, 0.92) !important;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+}
+
+/* Disclaimer banner */
+.disclaimer-text {
+    color: #94A3B8;
+    font-size: 0.75rem;
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.5rem;
+}
