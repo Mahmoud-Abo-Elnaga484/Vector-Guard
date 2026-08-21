@@ -50,4 +50,4 @@ Unlike standard conversational AI, VectorGuard is strictly constrained to WHO cl
 1. **Clone the repository:**
    ```bash
    git clone [https://github.com/Mahmoud-Abo-Elnaga484/VectorGuard.git](https://github.com/Mahmoud-Abo-Elnaga484/VectorGuard.git)
-   cd VectorGuard
+   
