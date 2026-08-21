@@ -1,24 +1,53 @@
-MansouraHack - Evidence-Grounded Differential Diagnosis Assistant
-=================================================================
+# 🦟 VectorGuard AI
 
-This folder is complete and self-contained.
-Do NOT copy it over any old folder. Put it anywhere and run it.
+> **Evidence-grounded differential diagnosis for mosquito-borne viral diseases.**
 
-HOW TO RUN - double click these three, in order:
+VectorGuard AI is an advanced, medically-aligned Retrieval-Augmented Generation (RAG) pipeline designed to assist with conversational clinical information regarding mosquito-transmitted viral illnesses (Dengue, Zika, Chikungunya, and Yellow Fever). 
 
-  1_SETUP.bat        installs packages, asks for your Gemini API key
-  2_BUILD_INDEX.bat  indexes the WHO guideline (a few minutes, once only)
-  3_START_APP.bat    opens the web interface
+Unlike standard conversational AI, VectorGuard is strictly constrained to WHO clinical guidelines. It guarantees zero-hallucination citations by structurally enforcing the LLM to output only valid chunk IDs, backed by a real-time LLM-as-a-judge evaluation system.
 
-Extras (optional):
+---
 
-  4_RUN_EVALUATION.bat   3-case evaluation, writes report.md
-  5_TEST_IN_CONSOLE.bat  the same 3 cases printed in the console
+## ✨ Core Features
 
-IMPORTANT
----------
-Never run two of these at the same time.
-Qdrant locks its files to a single process.
-Close the running window with Ctrl+C before starting another.
+*   **🏥 Clinical Focus:** Specialized in WHO guidelines for Dengue Fever, Chikungunya, Yellow Fever, and Zika Virus.
+*   **🛡️ Strict Guardrails:** Automatically refuses out-of-scope medical questions (e.g., general cardiology) or dangerous queries before they even reach the generation model.
+*   **🧩 Structurally Safe Citations:** The generation model is restricted to outputting `chunk_ids` only. The backend resolves these IDs to actual documents and pages, making fabricated citations structurally impossible.
+*   **📊 Live Evaluation Metrics:** Displays real-time **Faithfulness** and **Citation Accuracy** scores directly in the UI for every response using an isolated LLM Judge.
+*   **🔍 Advanced RAG Architecture:** Utilizes Section-Aware and Recursive Chunking to maintain clinical context, ensuring symptoms are accurately mapped to their respective diseases.
 
-Get a free Gemini API key at: https://aistudio.google.com/apikey
+---
+
+## 🛠️ Tech Stack
+
+*   **Frontend UI:** [Streamlit](https://streamlit.io/)
+*   **LLM Provider (Generation):** Google Gemini (`gemini-3.5-flash`) via OpenAI-compatible endpoint.
+*   **LLM Provider (Evaluation/Judge):** Google Gemini (`gemini-3.5-flash-lite`).
+*   **Embeddings:** `BAAI/bge-small-en-v1.5`
+*   **Vector Database:** [Qdrant](https://qdrant.tech/)
+*   **Document Processing:** LlamaCloud Parse
+
+---
+
+## 🏗️ Architecture / Pipeline
+
+1.  **Ingestion:** Medical documents are parsed and split using Section-Aware Recursive Chunking (`Chunk Size: 2000`, `Overlap: 200`). This preserves document headers (e.g., *Dengue -> Treatment*) so the LLM doesn't lose context.
+2.  **Retrieval:** Queries are embedded using `bge-small-en-v1.5` (with proper search prefixes) to fetch the Top-K relevant chunks from Qdrant. A hard threshold is applied; if relevance is below 0.30, generation is blocked.
+3.  **Generation:** The `gemini-3.5-flash` model synthesizes the clinical response and returns raw JSON containing only validated `chunk_ids`.
+4.  **Evaluation:** A separate `gemini-3.5-flash-lite` judge evaluates the output for logical entailment, measuring *Retrieval Precision*, *Citation Accuracy*, and *Faithfulness*.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+*   Python 3.10+
+*   Google Gemini API Key
+*   LlamaCloud API Key
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/Mahmoud-Abo-Elnaga484/VectorGuard.git](https://github.com/Mahmoud-Abo-Elnaga484/VectorGuard.git)
+   cd VectorGuard
